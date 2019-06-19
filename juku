@@ -1,0 +1,36 @@
+# import libraries
+import urllib.request
+from bs4 import BeautifulSoup
+import csv
+
+# specify the url
+urlpage =  'http://www.jukuu.com/search.php?q=set+to+degree' 
+print(urlpage)
+# query the website and return the html to the variable 'page'
+page = urllib.request.urlopen(urlpage)
+# parse the html using beautiful soup and store in variable 'soup'
+soup = BeautifulSoup(page, 'html.parser')
+#print(soup)
+# find results within table
+table = soup.find('table', attrs={'width': '680'})
+results = table.find_all('tr',{'class':['e', 'c']})
+#results_e = table.find_all('tr',class_="e")
+#results_c = table.find_all('tr',class_="c")
+print('Number of results', len(results))
+
+print(results)
+
+# create and write headers to a list 
+rows = []
+
+# loop over results
+for result in results:
+    # find all columns per result
+    data = result.find_all('td')
+    tds= data[1].getText()
+    rows.append(tds)
+    # check that columns have data 
+    if len(data) == 0: 
+        continue
+
+print(rows)
