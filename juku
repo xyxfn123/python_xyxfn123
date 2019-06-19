@@ -1,7 +1,9 @@
 # import libraries
 import urllib.request
 from bs4 import BeautifulSoup
+import pandas as pd
 import csv
+
 
 # specify the url
 urlpage =  'http://www.jukuu.com/search.php?q=set+to+degree' 
@@ -34,3 +36,8 @@ for result in results:
         continue
 
 print(rows)
+
+header = ['English/Chinese']
+test=pd.DataFrame(columns=header,data=rows)
+print(test)
+test.to_csv('jukuu_set_to_degree.csv',encoding='gbk')
